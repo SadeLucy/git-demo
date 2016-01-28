@@ -6,13 +6,16 @@
 */
 
 'use strict';
+// 在gulpfile文件中载入我们所需要的工具文件包
+// 例如：gulp、gulp-less等
+// 这样方便我们将代码进行less编译 压缩 合并
 var gulp = require("gulp");
 var less = require("gulp-less");
 var cssnano = require("gulp-cssnano");
 
 gulp.task('style',function() {
     gulp.src("src/style/*.less")
-    // 转化成css文件
+        // 转化成css文件
         .pipe(less())
         // 压缩
         .pipe(cssnano())
@@ -27,14 +30,19 @@ var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
 gulp.task('script',function() {
     gulp.src('src/script/*.js')
+    // 将所选目录中的所有为.js格式的文件合并为命名为all.js中
         .pipe(concat('all.js'))
+        // 将all.js文件压缩
         .pipe(uglify())
+        // 然后保存到dist/script/目录中
         .pipe(gulp.dest('dist/script/'))
         .pipe(browserSync.reload({
       stream: true
     }));
   }) ;
 
+
+// 复制图片
 gulp.task('images',function() {
     gulp.src('src/images/*.png')
         .pipe(gulp.dest('dist/images/'))
@@ -44,6 +52,8 @@ gulp.task('images',function() {
 
   });
 
+
+// HTML的压缩
 var htmlmin = require("gulp-htmlmin");
 gulp.task('html',function() {
     gulp.src('src/*.html')
@@ -59,7 +69,7 @@ gulp.task('html',function() {
 
 
 
-
+// 浏览器自动化同步
 var browserSync = require('browser-sync');
 gulp.task('serve', function() {
   browserSync({
